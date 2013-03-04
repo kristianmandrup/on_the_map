@@ -1,9 +1,16 @@
 class Address
-  include BasicDocument
+  # include BasicDocument
+  include Mongoid::Document
   include Mongoid::Dirty
+
+  after_update :perform_geocoding
 
   def self.geo_address_fields
     %w{city state state_code province province_code postal_code country country_code}
+  end
+
+  def self.all_geo_address_fields
+    geo_address_fields + %w{latitude longitude}
   end
   
   def self.address_fields
@@ -39,6 +46,16 @@ class Address
       res << "#{name}: #{send(name)}\n"
     end
   end
+
+  def geolocatable?
+    !full.blank?
+  end
+
+  def perform_geocoding
+    return unless geolocatable?
+    addressable.perform_geocoding if addressable.respond_to? :perform_geocoding
+  end
+  alias_method :perform_geocoding!, :perform_geocoding  
 
   protected
 

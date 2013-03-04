@@ -1,6 +1,6 @@
-= on_the_map
+# On The Map
 
-Mongoid concerns for putiing models "on the map"
+Mongoid concerns for putting models "on the map".
 
 Contains various useful concern modules for: 
 
@@ -49,6 +49,9 @@ Contains various useful concern modules for:
   include_concerns :geo_locatable,  from: :on_the_map
 ```
 
+See the specs for examples on how to use these concerns. 
+
+Note: There is room for improvement ;)
 
 ## Contributing to on_the_map
  

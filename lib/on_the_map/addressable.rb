@@ -7,7 +7,7 @@ module OnTheMap
     included do
   		embeds_one :address,  as: :addressable
 
-      Address.address_fields.each do |fname|      
+      Address.address_fields.each do |fname|
         delegate fname, to: :address
 
         meth_name = "#{fname}="
@@ -16,15 +16,17 @@ module OnTheMap
           # create new empty address if none defined
           self.address ||= Address.new 
 
-          # set address field
-          self.address.send(meth_name, value)        
+          unless value.to_s.strip.blank?
+            # set address field
+            self.address.send(meth_name, value)
 
-          # update full address
-          self.address.send :set_full
+            # update full address
+            self.address.send :set_full
 
-          perform_geocoding if perform_geocoding? fname
+            perform_geocoding if perform_geocoding? fname
 
-          address.save!
+            address.save!
+          end
         end
       end
 
