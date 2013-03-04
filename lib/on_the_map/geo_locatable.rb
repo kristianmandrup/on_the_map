@@ -30,9 +30,10 @@ module OnTheMap
 
             obj.geocoded = true
 
-            if obj.respond_to? :gmaps
-              obj.gmaps = true 
-            end
+            # apparently not needed! (according to author of gmaps4rails)
+            # if obj.respond_to? :gmaps
+            #   obj.gmaps = true 
+            # end
 
             obj.send(:geocoding_done!)
           end

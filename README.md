@@ -11,42 +11,67 @@ Contains various useful concern modules for:
 * geo spatial indexing of position
 * geo spatial searching on position
 
-* Adressable
+The code examples below use the concerned gem to include the concern modules into a class.
+You can use a simple `include OnTheMap::XXXX` in its place or some other concern related API of your choice.
 
 ### Adressable
 
-* embeds an address on the model
-* adds delegate methods to all embedded address fields
+* embeds an `address` on the model
+* adds delegate methods to all embedded address fields (setters/getters)
 * adds `full_address` method that returns full adress from concatenation of all fields
+
+Address fields: `city, state, state_code, province, province_code, postal_code, country, country_code`
+
+```ruby
+class MyModel
+  include Mongoid::Document
+
+  include_concern :addressable, from: :on_the_map
+end
+```
 
 ### GeoLocatable
 
 * includes `addressable` and `positionable` concerns
-* performs geocoding after an address is created or updated
-* adds `latitude` and `longitude` methods to model
+* performs geocoding to calculate new position after an address is created or updated
+* adds `latitude` and `longitude` to model
+
+```ruby
+class MyModel
+  include Mongoid::Document
+
+  include_concerns :geo_locatable, from: 'OnTheMap'
+end
+```
 
 ### Mappable
 
 * include `Gmaps4rails::ActsAsGmappable`
-* adds field `normalized_address` to store address calculated and returned by Google Maps geo-coding
-* adds method `gmaps4rails_address` which returns main adress for use in geo-coding
+* adds field `normalized_address` to store full address calculated and returned by Google Maps geo-coding
+* adds method `gmaps4rails_address` which returns adress used in gmaps geo-coding (if enabled)
+* includes `geo_locatable` and `positionable` concerns.
+
+```ruby
+class MyModel
+  include Mongoid::Document
+
+  include_concerns :mappable, from: 'OnTheMap'
+end
+```
 
 ### Positionable
 
-* includes `Mongoid::Geospatial` into the model to make GeoSpatial helpers available directly on the model
+* includes `Mongoid::Geospatial` into the model to make GeoSpatial methods available
 * Adds geo_field `position` (macro from Mongoid GeoSpatial)
 * adds spatial indexing for position field
-
 * positon field is indexed and used in geo-searches (fx find points near a point)
 
-## Usage
-
 ```ruby
-  include_concerns :addressable,    from: :on_the_map
-  include_concerns :mappable,       from: :on_the_map
-  include_concerns :positionable,   from: :on_the_map
+class MyModel
+  include Mongoid::Document
 
-  include_concerns :geo_locatable,  from: :on_the_map
+  include_concerns :positionable, from: 'OnTheMap'
+end
 ```
 
 See the specs for examples on how to use these concerns. 
