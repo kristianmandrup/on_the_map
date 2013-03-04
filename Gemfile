@@ -6,15 +6,15 @@ gem 'sugar-high', '~> 0.7.3', github: 'kristianmandrup/sugar-high'
 gem 'hashie',     '~> 1.2'
 gem 'concerned',  '~> 0.1.3'
 
-gem "rspec",    ">= 2.12.0", group: [:test, :development]
+gem "rspec",      ">= 2.12.0", group: [:test, :development]
 
 group :test do
   gem 'rails', '>= 4.0.0.beta1', github: 'rails/rails' # '>= 3.1' #
   gem 'geocoder'
   gem 'mongoid_geospatial'
-  gem 'mongoid_indexing', '~> 0.1.1', path: '/Users/kmandrup/private/repos/mongoid_indexing'
+  gem 'mongoid_indexing',   '~> 0.1.2'
 
-  gem 'gmaps4rails', '>= 2.0.0.pre', github: 'apneadiving/Google-Maps-for-Rails'
+  gem 'gmaps4rails',        '>= 2.0.0.pre', github: 'apneadiving/Google-Maps-for-Rails'
   # gem 'gmaps-autocomplete-rails'  
 
   # time travel
