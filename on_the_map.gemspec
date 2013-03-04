@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
   s.date = "2013-03-04"
-  s.description = "TODO: longer description of your gem"
+  s.description = "Makes it easy to add functionality to models related to geocoding, addressing and placing them as pins on a map"
   s.email = "kmandrup@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     "lib/on_the_map/geo_locatable.rb",
     "lib/on_the_map/mappable.rb",
     "lib/on_the_map/positionable.rb",
+    "on_the_map.gemspec",
     "spec/address_spec.rb",
     "spec/on_the_map/addressable_spec.rb",
     "spec/on_the_map/geo_locatable_spec.rb",
@@ -45,7 +46,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.25"
-  s.summary = "TODO: one-line summary of your gem"
+  s.summary = "Pre-baked Mongoid concerns to put models on the map"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3

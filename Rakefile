@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "on_the_map"
   gem.homepage = "http://github.com/kristianmandrup/on_the_map"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Pre-baked Mongoid concerns to put models on the map}
+  gem.description = %Q{Makes it easy to add functionality to models related to geocoding, addressing and placing them as pins on a map}
   gem.email = "kmandrup@gmail.com"
   gem.authors = ["Kristian Mandrup"]
   # dependencies defined in Gemfile
