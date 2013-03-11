@@ -18,7 +18,7 @@ describe OnTheMap::Addressable do
   subject { address }
 
   context 'blank/empty address' do
-    let(:address) { MyGeoCodableAddress.create street: '', city: ''  }
+    let(:address) { MyGeoCodedAddress.create street: '', city: ''  }
 
     it 'should have a blank full address' do
       expect(subject.address.full).to be_blank

@@ -1,7 +1,7 @@
 class Address
   # include BasicDocument
   include Mongoid::Document
-  include Mongoid::Dirty
+  # include Mongoid::Dirty
 
   after_update :perform_geocoding
 

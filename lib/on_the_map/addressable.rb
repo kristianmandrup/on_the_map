@@ -30,7 +30,7 @@ module OnTheMap
         end
       end
 
-      delegate :region, to: :address              
+      delegate :region, :geolocatable?, to: :address              
     end
 
     def perform_geocoding? name

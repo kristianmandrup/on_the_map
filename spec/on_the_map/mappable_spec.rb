@@ -77,8 +77,9 @@ describe OnTheMap::Mappable do
       # leave geocoding to geocoder!
       its(:gmaps_geocode?)  { should be_false }    
 
-      # geocoder sets gmaps when position has been calculated
-      its(:gmaps)   { should be_true }
+      # geocoder sets gmaps when position has been calculated?
+      # Note: not done anymore
+      its(:gmaps)   { should be_false }
     end
   end
 end
