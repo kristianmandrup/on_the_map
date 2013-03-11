@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "on_the_map"
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
-  s.date = "2013-03-04"
+  s.date = "2013-03-11"
   s.description = "Makes it easy to add functionality to models related to geocoding, addressing and placing them as pins on a map"
   s.email = "kmandrup@gmail.com"
   s.extra_rdoc_files = [
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     ".rspec",
+    "Changelog.md",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
