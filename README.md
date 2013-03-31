@@ -14,10 +14,6 @@ Contains various useful concern modules for:
 The code examples below use the concerned gem to include the concern modules into a class.
 You can use a simple `include OnTheMap::XXXX` in its place or some other concern related API of your choice.
 
-## TODO
-
-Use *bundler* for gem management, not *jeweler* !!!
-
 ### Adressable
 
 * embeds an `address` on the model
