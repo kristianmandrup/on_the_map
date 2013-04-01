@@ -21,4 +21,8 @@ group :test do
 
   gem 'shoulda'         
   gem 'shoulda-matchers'
+
+  gem 'geocoder'
+  gem 'mongoid_geospatial'
+  gem 'gmaps4rails'
 end

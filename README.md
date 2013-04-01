@@ -16,7 +16,7 @@ You can use a simple `include OnTheMap::XXXX` in its place or some other concern
 
 ### Adressable
 
-* embeds an `address` on the model
+* embeds an `address` on the model using `adressable` polymorphic relationship
 * adds delegate methods to all embedded address fields (setters/getters)
 * adds `full_address` method that returns full adress from concatenation of all fields
 
@@ -28,6 +28,11 @@ class MyModel
 
   include_concern :addressable, from: :on_the_map
 end
+
+
+model = MyModel.new
+model.addressable = Address.new street: 'madison avenue 1'
+model.addressable.city == 'New York'
 ```
 
 ### GeoLocatable
@@ -35,6 +40,20 @@ end
 * includes `addressable` and `positionable` concerns
 * performs geocoding to calculate new position after an address is created or updated
 * adds `latitude` and `longitude` to model
+
+*Usage*
+
+Gemfile
+
+```ruby
+gem 'geocoder'
+```
+
+Depending on usage scenario, you might have to explicitly require *geocoder* also.
+
+`require 'geocoder'`
+
+Include the concern:
 
 ```ruby
 class MyModel
@@ -46,10 +65,24 @@ end
 
 ### Mappable
 
-* include `Gmaps4rails::ActsAsGmappable`
+* includes `Gmaps4rails::ActsAsGmappable`
 * adds field `normalized_address` to store full address calculated and returned by Google Maps geo-coding
 * adds method `gmaps4rails_address` which returns adress used in gmaps geo-coding (if enabled)
 * includes `geo_locatable` and `positionable` concerns.
+
+*Usage*
+
+Gemfile
+
+```ruby
+gem 'gmaps4rails'
+```
+
+Depending on usage scenario, you might have to explicitly require *gmaps4rails* also.
+
+`require 'gmaps4rails'`
+
+Include the concern:
 
 ```ruby
 class MyModel
@@ -65,6 +98,22 @@ end
 * Adds geo_field `position` (macro from Mongoid GeoSpatial)
 * adds spatial indexing for position field
 * positon field is indexed and used in geo-searches (fx find points near a point)
+
+*Usage*
+
+Gemfile
+
+```ruby
+gem 'mongoid_geospatial'
+```
+
+Depending on usage scenario, you might have to explicitly require *mongoid_geospatial* also.
+
+`require 'mongoid_geospatial'`
+
+Include the concern:
+
+
 
 ```ruby
 class MyModel

@@ -19,7 +19,7 @@ module OnTheMap
       geocoded_by :full_address, coordinates: :position, skip_index: true do |obj,results|
         if geo = results.first 
           if geo.latitude && geo.longitude
-            obj.geocoding_started!
+            obj.send :geocoding_started!
 
             Address.geo_address_fields.each do |fname|
               geo_value = geo.send fname
@@ -35,7 +35,7 @@ module OnTheMap
             #   obj.gmaps = true 
             # end
 
-            obj.geocoding_done!
+            obj.send :geocoding_done!
           end
         end        
       end

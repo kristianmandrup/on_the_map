@@ -11,6 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "Add map, address and geocoding functionality to your Mongoid models"
   spec.description   = "Makes it easy to add functionality to models related to geocoding, addressing and placing them as pins on a map"
   spec.email         = "kmandrup@gmail.com"
+  spec.homepage      = "https://github.com/kristianmandrup/on_the_map"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
