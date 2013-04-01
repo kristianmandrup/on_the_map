@@ -1,86 +1,106 @@
-Geocoder.configure(:lookup => :test)
+module GeocodeStubbing
+  def self.stub_geocoding!
+    StubGeocodeLookups.new
+  end
+end
 
-Invalid_adr = {
-  'latitude'     => nil,
-  'longitude'    => nil,
-  'address'      => nil,
-  'state'        => nil,
-  'state_code'   => nil,
-  'country'      => nil,
-  'country_code' => nil
-}
+class StubGeocodeLookups
+  def initialize
+    Geocoder.configure(:lookup => :test)
+    configure
+  end
 
-# Invalid
+  def configure
+    add_stubs :invalid_adr, :maglekildevej, :gammel_kongevej
+  end
 
-Geocoder::Lookup::Test.add_stub(
-  "blip blab", [Invalid_adr]
-)
+  protected
 
-Geocoder::Lookup::Test.add_stub(
-  "blip blab, blop", [Invalid_adr]
-)
+  def add_stubs *stubs
+    stubs.flatten.each {|stub| add_stub stub }
+  end
 
-Geocoder::Lookup::Test.add_stub(
-  "blip blab, blop, DK", [Invalid_adr]
-)
+  def add_stub stub
+    stubber = stub_class(stub).new
 
-Maglekildevej = {
-  'latitude'     => 55.677069,
-  'longitude'    => 12.513321,
-  'address'      => 'Maglekildevej 18, 4th, Frederiksberg, Copenhagen, Denmark',
-  'state'        => '',
-  'state_code'   => '',
-  'country'      => 'Denmark',
-  'country_code' => 'DK'
-}
+    stubber.places.flatten.each do |place|
+      Geocoder::Lookup::Test.add_stub place, [stubber.result]
+    end
+  end
 
-Gammel_kongevej = {
-  'latitude'     => 55.67616169999999,
-  'longitude'    => 12.5422907,
-  'address'      => 'Gammel kongevej 123, Frederiksberg, Copenhagen, Denmark',
-  'state'        => '',
-  'state_code'   => '',
-  'country'      => 'Denmark',
-  'country_code' => 'DK'
-}
+  def stub_class name
+    "StubGeocodeLookups::#{name.to_s.camelize}".constantize
+  end
 
-# Gammel kongevej
+  def resolve *stubs
+    [stubs].flatten.map {|stub| send(stub) }
+  end  
 
-Geocoder::Lookup::Test.add_stub(
-  "Gammel kongevej 123, Frederiksberg", [Gammel_kongevej]
-)
+  class Stubber
+  end
 
-Geocoder::Lookup::Test.add_stub(
-  "Gammel kongevej 123", [Gammel_kongevej]
-)
+  class InvalidAdr < Stubber
+    def result
+      {
+    'latitude'     => nil,
+    'longitude'    => nil,
+    'address'      => nil,
+    'state'        => nil,
+    'state_code'   => nil,
+    'country'      => nil,
+    'country_code' => nil
+      }
+    end
 
-Geocoder::Lookup::Test.add_stub(
-  "Gammel kongevej 123, Frederiksberg, DK", [Gammel_kongevej]
-)
+    def places
+      ["blip blab", "blip blab, blop", "blip blab, blop, DK"]
+    end    
+  end
 
-Geocoder::Lookup::Test.add_stub(
-  "Gammel kongevej 123, Frederiksberg, Denmark, DK", [Gammel_kongevej]
-)
+  class Maglekildevej < Stubber
+    def result 
+      {
+      'latitude'     => 55.677069,
+      'longitude'    => 12.513321,
+      'address'      => 'Maglekildevej 18, 4th, Frederiksberg, Copenhagen, Denmark',
+      'state'        => '',
+      'state_code'   => '',
+      'country'      => 'Denmark',
+      'country_code' => 'DK'
+      }
+    end
 
+    def places
+      [
+        "Maglekildevej 18, 4th",
+        "Maglekildevej 18, 4th, Frederiksberg",
+        "Maglekildevej 18, 4th, Denmark, DK",
+        "Maglekildevej 18, 4th, Frederiksberg, DK",
+        "Maglekildevej 18, 4th, Frederiksberg, Denmark, DK"
+      ]
+    end    
+  end
 
-# Maglekildevej
+  class GammelKongevej < Stubber
+    def result
+      {
+      'latitude'     => 55.67616169999999,
+      'longitude'    => 12.5422907,
+      'address'      => 'Gammel kongevej 123, Frederiksberg, Copenhagen, Denmark',
+      'state'        => '',
+      'state_code'   => '',
+      'country'      => 'Denmark',
+      'country_code' => 'DK'
+      }
+    end
 
-Geocoder::Lookup::Test.add_stub(
-  "Maglekildevej 18, 4th, Frederiksberg", [Maglekildevej]
-)
-
-Geocoder::Lookup::Test.add_stub(
-  "Maglekildevej 18, 4th", [Maglekildevej]
-)
-
-Geocoder::Lookup::Test.add_stub(
-  "Maglekildevej 18, 4th, Denmark, DK", [Maglekildevej]
-)
-
-Geocoder::Lookup::Test.add_stub(
-  "Maglekildevej 18, 4th, Frederiksberg, Denmark, DK", [Maglekildevej]
-)
-
-Geocoder::Lookup::Test.add_stub(
-  "Maglekildevej 18, 4th, Frederiksberg, DK", [Maglekildevej]
-)
+    def places
+      [
+        "Gammel kongevej 123", 
+        "Gammel kongevej 123, Frederiksberg", 
+        "Gammel kongevej 123, Frederiksberg, DK",
+        "Gammel kongevej 123, Frederiksberg, Denmark, DK"
+      ]
+    end
+  end    
+end

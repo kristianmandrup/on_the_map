@@ -19,6 +19,14 @@ module OnTheMap
 
           unless value.to_s.strip.blank?
             # set address field
+            
+            value = case Address.type_of(fname)
+            when :int
+              value.to_i
+            else
+              value
+            end
+            
             self.address.send(meth_name, value)
 
             # update full address

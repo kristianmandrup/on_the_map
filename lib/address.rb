@@ -17,6 +17,15 @@ class Address
     %w{street number floor_adr} + geo_address_fields
   end
 
+  def self.type_of name
+    case name.to_sym
+    when :latitude, :longitude, :postal_code
+      :int
+    else
+      :string
+    end
+  end
+
   address_fields.each do |name|
     field name, type: String    
   end

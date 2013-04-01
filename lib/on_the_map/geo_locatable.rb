@@ -56,13 +56,13 @@ module OnTheMap
 
     def latitude
       perform_geocoding unless position
-      position[1] if position
+      position[1].to_i if position
     end
     alias_method :lat, :latitude
 
     def longitude
       perform_geocoding unless position
-      position[0] if position
+      position[0].to_i if position
     end
     alias_method :lng, :longitude
 
